@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Twitterishify</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- SEO -->
+	<meta name="keywords"
+	      content="">
+
+	<meta name="description"
+	      content="">
+	<!-- END SEO -->
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="assets/stylesheets/main.css">
+
+	<!-- Add Angular -->
+
+</head>
+<style>
+	/* this prevents the angular handlebars from flickering when page loads */
+	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+		display: none !important;
+	}
+</style>
+
+<body ng-app="CoderBloc" ng-controller="signUpCtrl" class=".ng-cloak">
+
+<div class="row">
+	
+<div class="wrapper">
+	<div class="container">
+
+		<!-- BEGIN navbar -->
+
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+
+				<a class="navbar-brand" href="/"><img src="coderbloc-03-03.png" alt="logo" id="logo"></a>
+
+			</div>
+
+			<div class="navbar-text" id="welcomeMessage" ng-cloak>{{userLogInfo}}</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="">
+
+				<!-- testing to add user's login info once they've signed in -->
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="badge btnColor navBarBtn">Login</span></a></li>
+					<li><a href="#registerModal" data-toggle="modal" data-target="#regModal"><span class="badge btnColor navBarBtn">Register</span></a></li>
+				</ul>
+
+			</div><!-- /.navbar-collapse -->
+
+		</nav> <!-- END navbar -->
+
+
+
+	</div> <!-- END initial container -->
+
+
+</div> <!-- END initial wrapper -->
+</div> <!-- END initial row -->
+
+<div class="row"> <!-- Beginning second row -->
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	
+	</div>
+
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="roomChoice"> <!-- content -->
+		<div id="helpRoom">
+			
+			<a href="/project_board" class="main"><h2> SEARCH </h2></a>
+				<span id="projDescr" id="center">
+				Enter a Twitter handle to access and curate data for that account's history.
+
+				</span>
+		</div>
+
+		<a href="/forum_index" class="main"><h2>FORUM</h2></a>
+				<span id="helpDescr" id="center">
+				Read the latest opinions and research on selected accounts or create your own conversation.
+					
+				</span>
+		</div>
+
+		
+		
+	</div>
+</div>
+
+
+
+
+<!-- Modal for REGISTER -->
+<div id="regModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Please fill out your information below</h4>
+      </div>
+      <div class="modal-body">
+
+		<form ng-submit="createUser()">
+		  <div class="form-group">
+		    <label for="regEmail">Email:</label>
+		    <input ng-keyup="$event.keyCode == 13 && createUser()" ng-model="formData.userEmail" type="email" class="form-control" id="regEmail" placeholder="John@AOL.com" ng-required>
+		  </div>			
+		  <div class="form-group">
+		    <label for="regUserName">User Name:</label>
+		    <input ng-keyup="$event.keyCode == 13 && createUser()" type="text" ng-model="formData.userName" class="form-control" id="regUserName" placeholder="User Name">
+		  </div>
+		  <div class="form-group">
+		    <label for="regPassword">Password:</label>
+		    <input ng-keyup="$event.keyCode == 13 && createUser()" type="password" ng-model="formData.userPass"  class="form-control" id="regPassword" placeholder="Password">
+		  </div>
+			
+		 
+		</form>
+
+
+      </div>
+      <div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="createUser()" class="btn btn-default" data-dismiss="modal" id="register">Register</button>
+      </div>
+    </div> 
+
+  </div><!-- end modal -->
+</div>
+
+<!-- Modal for login -->
+<div id="loginModal" data-backdrop="false" ng-hide="hideLoginModal" class="modal fade" role="dialog" ng-controller="loginCtrl">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Welcome Back</h4>
+      </div>
+      <div class="modal-body">
+			
+		<form ng-submit="login()">
+		  <div class="form-group">
+		    <label for="loginUserName">User Name:</label>
+		    <input ng-keyup="$event.keyCode == 13 && login()" type="text" class="form-control" id="loginUserName" placeholder="User Name" ng-model="loginData.userName">
+		  </div>
+		  <div class="form-group">
+		    <label for="loginPassword">Password:</label>
+		    <input ng-keyup="$event.keyCode == 13 && login()" type="password" class="form-control" id="loginPassword" placeholder="Password" ng-model="loginData.userPass">
+		  </div>
+		  <!-- <button type="submit" class="btn btn-default" id="login">Login</button> -->
+		</form>
+
+		  {{loginStatusDiv}}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-default" data-dismiss="" id="login" ng-click="login()">Login</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+
+</html>
